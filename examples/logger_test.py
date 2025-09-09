@@ -1,5 +1,5 @@
 from loguru import logger
-LOG_FILE = "../resource/log.txt"
+LOG_FILE = "../storage/log.txt"
 
 logger.add(LOG_FILE)
 

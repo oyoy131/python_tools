@@ -16,6 +16,8 @@ from pathlib import Path
 from moviepy import vfx, afx
 import math
 
+from numpy import float128
+
 VIDEO_FILE_DIR = Path("../resource/videos").resolve()
 AUDIO_FILE_DIR = Path("../resource/audios").resolve()
 IMG_FILE_DIR = Path("../resource/img").resolve()
@@ -133,27 +135,31 @@ final_clip = CompositeVideoClip([video_clip(my_video_clip),
 final_clip.write_images_sequence("./%04d.jpg", fps=1)
 # close_t(new_clip)
 
+
+
+
 def error_1():
     """
     error:
-        使用了 Path 类后就不支持使用“%”了，只能使用 os.path 或者是字符串路径
+        使用了 Path 类后就不支持使用“%”了
         TypeError: unsupported operand type(s) for %: 'WindowsPath' and 'int'
-    code:
-        my_video_clip.write_images_sequence(IMG_FILE_DIR/"%04d.jpg", fps=1)
+    solution:
+        只能使用 os.path 或者是字符串路径
     """
-    pass
+    my_video_clip.write_images_sequence(IMG_FILE_DIR / "%04d.jpg", fps=1)
 def error_2():
     """
     error:
         使用了 CompositeVideoClip() 得到的 clip 无法直接转为 JPEG 格式
         OSError: cannot write mode RGBA as JPEG
-    code:
-        final_clip = CompositeVideoClip([video_clip(my_video_clip),
+    solution:
+        RGBA 模式是指图像有 红色(R)、绿色(G)、蓝色(B) 和 透明度(A) 通道。每个像素都包含这四个通道的信息。
+        JPEG 格式只支持 RGB 模式，即没有透明度通道。如果你尝试将 RGBA 模式的图像保存为 JPEG 格式，就会触发这个错误。
+    """
+    final_clip = CompositeVideoClip([video_clip(my_video_clip),
                                      text_clip(my_txt_clip)],
                                     )
-        final_clip.write_images_sequence("./%04d.jpg", fps=1)
-    """
-    pass
+    final_clip.write_images_sequence("./%04d.jpg", fps=1)
 
 
 
