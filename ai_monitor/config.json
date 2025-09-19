@@ -1,0 +1,13 @@
+{
+    "websocket_url": "ws://localhost:8000/ws/chat",
+    "web_port": 8001,
+    "reconnect_interval": 5,
+    "max_reconnect_attempts": 10,
+    "database_path": "data/chat_monitor.db",
+    "log_level": "INFO",
+    "enable_notifications": false,
+    "notification_keywords": ["重要", "紧急", "admin"],
+    "max_messages_in_memory": 1000,
+    "auto_backup_hours": 24,
+    "web_refresh_interval": 5
+}
