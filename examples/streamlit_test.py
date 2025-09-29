@@ -247,19 +247,15 @@ with left_plate:
     # 初始化共享数据
     if "callback_data" not in st.session_state:
         st.session_state.callback_data = "回调方案初始数据"
-
     # 定义回调函数
     def update_shared_data():
         """当用户更改文本时调用的回调函数"""
         st.session_state.callback_data = st.session_state.callback_text_area
         # st.session_state.data_from = "user"
-
-
     def backend_update():
         """后台更新数据"""
         st.session_state.callback_data = f"后台更新数据 (时间: {pd.Timestamp.now()})"
         # st.session_state.data_from = "backend"
-
 
     with st.expander("回调函数双向同步"):
         # 显示当前数据来源
@@ -289,7 +285,6 @@ with left_plate:
         st.code(st.session_state.callback_data)
 
     # ... existing code ...
-
 
     with st.expander("MoneyPrinter二次显示错误"):
 

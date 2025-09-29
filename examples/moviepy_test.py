@@ -32,6 +32,7 @@ output = VIDEO_FILE_DIR / "output.mp4"
 output_gif = VIDEO_FILE_DIR / "output.gif"
 
 def clip_preview(video_clip: VideoFileClip = None, audio_clip: AudioFileClip = None):
+    """使用多线程同时预览不同的clip"""
     def play_video():
         if video_clip:
             video_clip.preview()
@@ -71,6 +72,7 @@ def timing_t(clip:VideoFileClip):
     return modified_clip1
 
 def video_clip_info(clip:VideoFileClip):
+    """显示视频 clip 的基本信息"""
     print("="*10+"VideoInformation"+"="*10)
     print(f"filename:{clip.filename}\n"
           f"duration:{clip.duration}\n"
@@ -82,6 +84,7 @@ def video_clip_info(clip:VideoFileClip):
           f"audio_fps:{clip.audio.fps}") # use chain to get audio parameters
 
 def audio_clip_info(clip:AudioFileClip):
+    """显示音频 clip 的基本信息"""
     print("="*10+"AudioInformation"+"="*10)
     print(f"audio:{clip}\n"
           f"audio_duration:{clip.duration}\n"
@@ -89,11 +92,13 @@ def audio_clip_info(clip:AudioFileClip):
           f"audio_buffersize:{clip.buffersize}")
 
 def img_clip_info(clip:ImageClip):
+    """显示图片 clip 的基本信息"""
     print("="*10+"ImageInformation"+"="*10)
     print(f"size:{clip.size}\n"
           f"img_array:{clip.img}")
 
 def video_clip(clip:VideoFileClip) -> VideoFileClip:
+    """对视频进行处理"""
     clip = (clip
             .subclipped(0,5)
             .resized(height=720)
@@ -101,9 +106,11 @@ def video_clip(clip:VideoFileClip) -> VideoFileClip:
     return clip
 
 def audio_clip(clip:AudioFileClip) -> AudioFileClip:
+    """对音频进行处理"""
     pass
 
 def text_clip(clip:TextClip) -> TextClip:
+    """对文本进行处理"""
     clip.with_position(("center","center"))
     return clip
 
@@ -120,24 +127,24 @@ my_txt_clip = TextClip(
     duration=3,
 )
 
+# 打印 clip 的基本信息
 # video_clip_info(my_video_clip)
 # audio_clip_info(my_audio_clip)
 # img_clip_info(my_img_clip)
 
+# 合成最终 clip
 final_clip = CompositeVideoClip([video_clip(my_video_clip),
                                  text_clip(my_txt_clip)],
                                 )
 
-
-# clip_preview(final_clip)
+# 预览和保存 clip
+clip_preview(final_clip)
 # final_clip.write_videofile(output)
 # final_clip.write_gif(output_gif, fps=10)
-final_clip.write_images_sequence("./%04d.jpg", fps=1)
-# close_t(new_clip)
+# final_clip.write_images_sequence("./%04d.jpg", fps=1)
 
 
-
-
+# 一些练习时发现的错误
 def error_1():
     """
     error:
